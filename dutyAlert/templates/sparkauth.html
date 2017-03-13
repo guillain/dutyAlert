@@ -1,0 +1,85 @@
+{% extends "index.html" %}
+
+{% block sparkauth %}
+
+<script type="text/javascript">
+
+// Helper function that parses a query string into a dictionary object
+var parseQueryStr = function( queryString) {
+    var params = {}, keyvals, temp, i, l;
+    keyvals = queryString.split("&");  // Split out key/value pairs
+    for ( i = 0, l = keyvals.length; i < l; i++ ) {  // Split key/value strings into a dictionary object
+        tmp = keyvals[i].split('=');
+        params[tmp[0]] = tmp[1];
+    }
+    return params;
+};
+
+// Step #2: On page load, check if the 'code=' query param is present
+// If so user has already authenticated, and  page has been reloaded via the Redirect URI
+window.onload = function(e) {
+        document.getElementById('clientId').value="{{ config['SPARK_CLIENT_ID'] }}";
+        document.getElementById('clientSecret').value="{{ config['SPARK_CLIENT_SECRET'] }}";
+        document.getElementById('redirectUri').value="{{ config['APP_URL'] }}/sparkauth";
+	//document.getElementById('redirectUri').value=window.location.href.split("?")[0]; // Detect the current page's base URL
+
+	var params = parseQueryStr(window.location.search.substring(1)); // Parse the query string params into a dictionary
+	if (params['code']) { // If the query param 'code' exists, then...
+		document.getElementById('code').value = params['code']; // Display the auth code
+                tokenClick()
+                document.getElementById('token').removeAttribute('hidden');
+                document.getElementById('saveATSub').removeAttribute('hidden');
+	}
+	if (params['error']) { // If the query param 'error' exists, then something went wrong...
+		alert('Error requesting auth code: ' + params['error'] + ' / ' + params['error_description']);
+	}
+}
+
+
+// Step #3: Fires when the user clicks the 'Request Access Token' button
+// Takes the auth code and requests an access token
+function tokenClick() {
+	var appClientId=document.getElementById('clientId').value;
+	var appClientSecret=document.getElementById('clientSecret').value;
+	var appRedirectUri=document.getElementById('redirectUri').value;
+
+	xhttp = new XMLHttpRequest(); // Create an AJAX HTTP request object
+	xhttp.onreadystatechange = function() {  // Define a handler, which fires when the request completes
+		if (xhttp.readyState == 4) { // If the request state = 4 (completed)...
+			if (xhttp.status == 200) { // And the status = 200 (OK), then...
+				var authInfo = JSON.parse(xhttp.responseText); // Parse the JSON response into an object
+				document.getElementById('token').value = authInfo['access_token']; // Retrieve the access_token field, and display it
+			} else alert('Error requesting access token: ' + xhttp.statusText)
+ 		}
+	}
+	xhttp.open('POST', 'https://api.ciscospark.com/v1/access_token', true); // Initialize the HTTP request object for POST to the access token URL
+	// Build the HTML form request body 
+	var body = 'grant_type=authorization_code&'+  // This is an OAuth2 Authorization Code request
+		'redirect_uri='+encodeURIComponent(appRedirectUri)+'&'+ // Same custom app Redirect URI 
+		'code='+encodeURIComponent(document.getElementById('code').value)+'&'+ // User auth code retrieved previously
+		'client_id='+encodeURIComponent(appClientId)+'&'+ // The custom app Client ID
+		'client_secret='+encodeURIComponent(appClientSecret); // The custom app Client Secret
+	xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Sending the content as URL-encoded form data
+	xhttp.send(body); // Execute the AJAX HTTP request
+}
+</script>
+
+  <div class="wrapper">
+	<input type="hidden" id="clientId"/>
+	<input type="hidden" id="clientSecret"/>
+	<input type="hidden" id="redirectUri"/>
+        <input type="hidden" id="code"/>
+	<div>
+            <form action="saveAT" method="POST">
+		<table>
+			<tr>
+				<td><textarea id="token" name="token" readonly style="vertical-align: top" hidden></textarea></td>
+                                <td><a href="#" id="saveATSub" hidden >Save access token</a></td>
+			</tr>
+		</table>
+            </form>
+	</div>
+
+  </div>
+{% endblock %}
+

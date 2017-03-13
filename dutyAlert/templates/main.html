@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+
+{% block footer %}
+{% if session.logged_in %}
+<!--tr>
+  <td class="tblCenter">Organisation:<b>{{ organisation }}</b></td>
+  <td class="tblCenter">Role:<b>{{ role }}</b></td>
+  <td class="tblCenter">Licence:<b>{{ licence }}</b></td>
+</tr-->
+{% endif %}
+{% endblock %}
+

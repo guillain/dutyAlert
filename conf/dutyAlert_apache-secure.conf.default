@@ -1,0 +1,44 @@
+# Target: secure apache configuration file
+# Version: 0.1
+# Date: 2017/02/04
+# Author: Guillain (guillain@gmail.com)
+# Copyright 2017 GPL - Guillain
+
+<VirtualHost *:443>
+    ServerName ServerName.com
+    ServerAdmin admin@ServerName.com
+    ServerSignature Off
+
+    ErrorLog /var/www/dutyAlert/log/secure.error.log
+    CustomLog /var/www/dutyAlert/log/secure.access.log combined
+    LogLevel info
+
+    AddHandler wsgi-script .wsg
+
+    #WSGIDaemonProcess dutyalert user=www-data group=www-data threads=10 display-name=%{GROUP}
+    WSGIProcessGroup dutyAlert
+    WSGIScriptAlias / /var/www/dutyAlert/dutyAlert.wsgi
+    WSGIScriptReloading On
+
+    <Directory /var/www/dutyAlert>
+        WSGIProcessGroup dutyAlert
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Allow from all
+	Require all granted
+    </Directory>
+
+    # SSL Stuff
+    SSLEngine On
+    SSLCertificateFile /etc/ssl/private/ServerName.com.crt
+    SSLCertificateKeyFile /etc/ssl/private/ServerName.com.key
+    SSLCertificateChainFile /etc/ssl/private/ServerName.crt
+    <Location />
+            SSLRequireSSL On
+            SSLVerifyClient optional
+            SSLVerifyDepth 1
+            SSLOptions +StdEnvVars +StrictRequire
+    </Location>
+</VirtualHost>
+
+
