@@ -1,0 +1,6 @@
+conf/* linguist-vendored
+log/* linguist-vendored
+dutyAlert/static/js/* linguist-vendored
+dutyAlert/static/css/* linguist-vendored
+dutyAlert/static/image/* linguist-vendored
+dutyAlert/templates/* linguist-vendored
