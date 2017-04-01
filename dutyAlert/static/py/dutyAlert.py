@@ -9,7 +9,8 @@ from flask import Flask, request, render_template, redirect
 from flask import url_for, jsonify, session
 from tools import logger, exeReq, wEvent
 
-import re, os, sys, urllib, base64
+import re, os, sys, urllib, base64, smtplib
+from email.mime.text import MIMEText
 from pyCiscoSpark import post_room, post_message, post_roommembership
 from myTwilio import sms, call
 from tools import logger, exeReq, wEvent
@@ -38,7 +39,7 @@ def dutyAlert():
     wEvent('dutyAlert','room',str("Issue during room creation (name:"+roomname+")"))
     return 'KO'
 
-  # Prepare message: Cisco spark url: 'https://web.ciscospark.com/#/launch/rooms/' + base64.b64decode(room['id'])
+  # Prepare message
   roomlink = re.split('ciscospark://us/ROOM/', str(base64.b64decode(room['id'])))
 
   roommsg = api.config['APP_SPACE_MSG']
@@ -80,6 +81,19 @@ def dutyAlert():
     wEvent('dutyAlert','call',str(room['id'] + " Duty call processing"))
   except Exception as e:
     wEvent('dutyAlert','call',str(room['id'] + " Issue during call processing"))
+
+  # Duty send email
+  try:
+    msg = MIMEText(roommsg)
+    msg['Subject'] = api.config['APP_SPACE_MSG']
+    msg['From'] = api.config['APP_MAIL']
+    msg['To'] = session['email']
+    s = smtplib.SMTP('localhost')
+    s.sendmail(api.config['APP_MAIL'], session['email'], msg.as_string())
+    s.quit()
+    wEvent('dutyAlert','email',str(room['id'] + " Duty email processing"))
+  except Exception as e:
+    wEvent('dutyAlert','email',str(room['id'] + " Issue during email processing"))
 
   # End of Duty Alert auto treatment
   wEvent('dutyAlert','END',str(room['id'] + " Duty Alert created, status: " + status))

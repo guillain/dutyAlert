@@ -1,1 +1,52 @@
 
+[Sat Apr 01 14:44:25.892410 2017] [wsgi:info] [pid 6166] mod_wsgi (pid=6166): Shutdown requested 'dutyAlert'.
+[Sat Apr 01 14:44:25.892847 2017] [wsgi:info] [pid 6166] mod_wsgi (pid=6166): Stopping process 'dutyAlert'.
+[Sat Apr 01 14:44:25.892874 2017] [wsgi:info] [pid 6166] mod_wsgi (pid=6166): Destroying interpreters.
+[Sat Apr 01 14:44:25.892893 2017] [wsgi:info] [pid 6166] mod_wsgi (pid=6166): Cleanup interpreter ''.
+[Sat Apr 01 14:44:25.893953 2017] [wsgi:info] [pid 6166] mod_wsgi (pid=6166): Terminating Python.
+[Sat Apr 01 14:44:26.158464 2017] [wsgi:info] [pid 6166] mod_wsgi (pid=6166): Python has shutdown.
+[Sat Apr 01 14:44:26.158613 2017] [wsgi:info] [pid 6166] mod_wsgi (pid=6166): Exiting process 'dutyAlert'.
+[Sat Apr 01 14:44:27.300233 2017] [wsgi:info] [pid 7240] mod_wsgi (pid=7240): Attach interpreter ''.
+[Sat Apr 01 14:44:37.228500 2017] [wsgi:info] [pid 7240] [remote 192.168.30.22:512] mod_wsgi (pid=7240, process='dutyAlert', application=''): Loading WSGI script '/var/www/dutyAlert/dutyAlert.wsgi'.
+[Sat Apr 01 14:44:59.718789 2017] [wsgi:error] [pid 7240] dutyAlert: Start Alert duty process
+[Sat Apr 01 14:45:00.889302 2017] [wsgi:error] [pid 7240] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty room creation
+[Sat Apr 01 14:45:00.901555 2017] [wsgi:error] [pid 7240] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVmNew Duty Alert raised! 
+[Sat Apr 01 14:45:00.901741 2017] [wsgi:error] [pid 7240] Thanks to join the Cisco Spark Space to consult the message.
+[Sat Apr 01 14:45:00.901814 2017] [wsgi:error] [pid 7240] * Space name: Duty Alert Space
+[Sat Apr 01 14:45:00.901882 2017] [wsgi:error] [pid 7240] * Space id: Y2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm
+[Sat Apr 01 14:45:00.901949 2017] [wsgi:error] [pid 7240] * Space web url: https://web.ciscospark.com/rooms/0f10e810-16d9-11e7-a93a-534aff52b25f/chat
+[Sat Apr 01 14:45:00.901993 2017] [wsgi:error] [pid 7240] * Space app url: spark://rooms/0f10e810-16d9-11e7-a93a-534aff52b25f
+[Sat Apr 01 14:45:00.902034 2017] [wsgi:error] [pid 7240] * Duty login: guillain
+[Sat Apr 01 14:45:00.902075 2017] [wsgi:error] [pid 7240] * Duty mobile: +33609625172
+[Sat Apr 01 14:45:00.902121 2017] [wsgi:error] [pid 7240] * Duty mail: guillain@gmail.com
+[Sat Apr 01 14:45:01.558763 2017] [wsgi:error] [pid 7240] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty room membershipY2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm
+[Sat Apr 01 14:45:02.484448 2017] [wsgi:error] [pid 7240] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty room message post
+[Sat Apr 01 14:45:03.580125 2017] [wsgi:error] [pid 7240] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty sms processing
+[Sat Apr 01 14:45:04.406509 2017] [wsgi:error] [pid 7240] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty call processing
+[Sat Apr 01 14:45:04.457670 2017] [wsgi:error] [pid 7240] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vMGYxMGU4MTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty Alert created, status: OK
+[Sat Apr 01 14:47:32.865960 2017] [wsgi:info] [pid 7240] mod_wsgi (pid=7240): Shutdown requested 'dutyAlert'.
+[Sat Apr 01 14:47:32.866435 2017] [wsgi:info] [pid 7240] mod_wsgi (pid=7240): Stopping process 'dutyAlert'.
+[Sat Apr 01 14:47:32.866500 2017] [wsgi:info] [pid 7240] mod_wsgi (pid=7240): Destroying interpreters.
+[Sat Apr 01 14:47:32.866521 2017] [wsgi:info] [pid 7240] mod_wsgi (pid=7240): Cleanup interpreter ''.
+[Sat Apr 01 14:47:32.868028 2017] [wsgi:info] [pid 7240] mod_wsgi (pid=7240): Terminating Python.
+[Sat Apr 01 14:47:33.100083 2017] [wsgi:info] [pid 7240] mod_wsgi (pid=7240): Python has shutdown.
+[Sat Apr 01 14:47:33.100231 2017] [wsgi:info] [pid 7240] mod_wsgi (pid=7240): Exiting process 'dutyAlert'.
+[Sat Apr 01 14:47:34.275378 2017] [wsgi:info] [pid 7507] mod_wsgi (pid=7507): Attach interpreter ''.
+[Sat Apr 01 14:47:38.428486 2017] [wsgi:info] [pid 7507] [remote 192.168.30.22:512] mod_wsgi (pid=7507, process='dutyAlert', application=''): Loading WSGI script '/var/www/dutyAlert/dutyAlert.wsgi'.
+[Sat Apr 01 14:47:41.071842 2017] [wsgi:error] [pid 7507] dutyAlert: Start Alert duty process
+[Sat Apr 01 14:47:42.281764 2017] [wsgi:error] [pid 7507] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty room creation
+[Sat Apr 01 14:47:42.290585 2017] [wsgi:error] [pid 7507] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVmNew Duty Alert raised! 
+[Sat Apr 01 14:47:42.290632 2017] [wsgi:error] [pid 7507] Thanks to join the Cisco Spark Space to consult the message.
+[Sat Apr 01 14:47:42.290639 2017] [wsgi:error] [pid 7507] * Space name: Duty Alert Space
+[Sat Apr 01 14:47:42.290644 2017] [wsgi:error] [pid 7507] * Space id: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm
+[Sat Apr 01 14:47:42.290649 2017] [wsgi:error] [pid 7507] * Space web url: https://web.ciscospark.com/rooms/6f3e7d10-16d9-11e7-a93a-534aff52b25f/chat
+[Sat Apr 01 14:47:42.290654 2017] [wsgi:error] [pid 7507] * Space app url: spark://rooms/6f3e7d10-16d9-11e7-a93a-534aff52b25f
+[Sat Apr 01 14:47:42.290662 2017] [wsgi:error] [pid 7507] * Duty login: guillain
+[Sat Apr 01 14:47:42.290668 2017] [wsgi:error] [pid 7507] * Duty mobile: +33609625172
+[Sat Apr 01 14:47:42.290677 2017] [wsgi:error] [pid 7507] * Duty mail: guillain@gmail.com
+[Sat Apr 01 14:47:42.958255 2017] [wsgi:error] [pid 7507] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty room membershipY2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm
+[Sat Apr 01 14:47:43.843763 2017] [wsgi:error] [pid 7507] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty room message post
+[Sat Apr 01 14:47:43.850406 2017] [wsgi:error] [pid 7507] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty sms processing
+[Sat Apr 01 14:47:43.852614 2017] [wsgi:error] [pid 7507] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty call processing
+[Sat Apr 01 14:47:43.885628 2017] [wsgi:error] [pid 7507] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty email processing
+[Sat Apr 01 14:47:43.891639 2017] [wsgi:error] [pid 7507] dutyAlert: Y2lzY29zcGFyazovL3VzL1JPT00vNmYzZTdkMTAtMTZkOS0xMWU3LWE5M2EtNTM0YWZmNTJiMjVm Duty Alert created, status: OK
