@@ -1,9 +1,1 @@
 
-[Sat Apr 01 14:44:27.138689 2017] [ssl:info] [pid 7233] AH01914: Configuring server dutyalert.tontonserver.com:443 for SSL protocol
-[Sat Apr 01 14:44:27.139144 2017] [ssl:info] [pid 7233] AH02568: Certificate and private key dutyalert.tontonserver.com:443:0 configured from /etc/ssl/private/dev-collab.tontonserver.com.crt and /etc/ssl/private/dev-collab.tontonserver.com.key
-[Sat Apr 01 14:44:27.230308 2017] [ssl:info] [pid 7234] AH01914: Configuring server dutyalert.tontonserver.com:443 for SSL protocol
-[Sat Apr 01 14:44:27.230809 2017] [ssl:info] [pid 7234] AH02568: Certificate and private key dutyalert.tontonserver.com:443:0 configured from /etc/ssl/private/dev-collab.tontonserver.com.crt and /etc/ssl/private/dev-collab.tontonserver.com.key
-[Sat Apr 01 14:47:34.110934 2017] [ssl:info] [pid 7500] AH01914: Configuring server dutyalert.tontonserver.com:443 for SSL protocol
-[Sat Apr 01 14:47:34.111399 2017] [ssl:info] [pid 7500] AH02568: Certificate and private key dutyalert.tontonserver.com:443:0 configured from /etc/ssl/private/dev-collab.tontonserver.com.crt and /etc/ssl/private/dev-collab.tontonserver.com.key
-[Sat Apr 01 14:47:34.203053 2017] [ssl:info] [pid 7501] AH01914: Configuring server dutyalert.tontonserver.com:443 for SSL protocol
-[Sat Apr 01 14:47:34.203565 2017] [ssl:info] [pid 7501] AH02568: Certificate and private key dutyalert.tontonserver.com:443:0 configured from /etc/ssl/private/dev-collab.tontonserver.com.crt and /etc/ssl/private/dev-collab.tontonserver.com.key
