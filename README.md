@@ -33,13 +33,13 @@ But you can also get only the python with another web server, container...
 
 > cp conf/dutyAlert_apache.conf.default conf/dutyAlert_apache.conf
 > vi conf/dutyAlert_apache.conf (ServerName must be replaced)
-> ln -s /etc/apache2/conf-enabled/dutyAlert_apache.conf /var/www/dutyAlert/conf/dutyAlert_apache.conf
+> ln -s /var/www/dutyAlert/conf/dutyAlert_apache.conf /etc/apache2/conf-enabled/dutyAlert_apache.conf
 
 * For secure http (443)
 
 > cp conf/dutyAlert_apache-secure.conf.default conf/dutyAlert_apache_secure.conf
 > vi conf/dutyAlert_apache-secure.conf (ServerName must be replaced, certificate must be adapted)
-> ln -s /etc/apache2/conf-enabled/dutyAlert_apache-secure.conf /var/www/dutyAlert/conf/dutyAlert_apache-secure.conf
+> ln -s /var/www/dutyAlert/conf/dutyAlert_apache-secure.conf /etc/apache2/conf-enabled/dutyAlert_apache-secure.conf
 
 ### Configure the database
 > mysqladmin create dutyAlert -utoto -p

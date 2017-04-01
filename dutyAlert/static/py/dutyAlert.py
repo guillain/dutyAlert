@@ -9,7 +9,7 @@ from flask import Flask, request, render_template, redirect
 from flask import url_for, jsonify, session
 from tools import logger, exeReq, wEvent
 
-import re, os, sys, urllib
+import re, os, sys, urllib, base64
 from pyCiscoSpark import post_room, post_message, post_roommembership
 from myTwilio import sms, call
 from tools import logger, exeReq, wEvent
@@ -26,49 +26,62 @@ api.config.from_envvar('FLASK_SETTING')
 # Duty Alert mgt --------------------------------------------------------------------------
 @dutyAlert_api.route('/dutyAlert', methods=['POST'])
 def dutyAlert():
-  roomname = 'Duty Alert Space'
-  roommsg = 'New Duty Alert raised!'
+  wEvent('dutyAlert','START',str('Start Alert duty process'))
+  roomname = api.config['APP_SPACE_NAME']
   status = 'OK'
 
   # Duty room creation
   try:
     room = post_room(session['accesstoken'],roomname)
-    wEvent('dutyAlert','room',str("Duty room creation (name:"+roomname+", mobile:"+session['mobile']+")"))
+    wEvent('dutyAlert','room',str(room['id'] + " Duty room creation"))
   except Exception as e:
-    status = 'KO'
     wEvent('dutyAlert','room',str("Issue during room creation (name:"+roomname+")"))
+    return 'KO'
+
+  # Prepare message: Cisco spark url: 'https://web.ciscospark.com/#/launch/rooms/' + base64.b64decode(room['id'])
+  roomlink = re.split('ciscospark://us/ROOM/', str(base64.b64decode(room['id'])))
+
+  roommsg = api.config['APP_SPACE_MSG']
+  roommsg += '* Space name: ' + roomname + '\n'
+  roommsg += '* Space id: ' + room['id'] + '\n'
+  roommsg += '* Space web url: ' + 'https://web.ciscospark.com/rooms/' + str(roomlink[1]) + '/chat' + '\n'
+  roommsg += '* Space app url: ' + 'spark://rooms/' + str(roomlink[1]) +'\n'
+  roommsg += '* Duty login: ' + session['login'] + '\n'
+  roommsg += '* Duty mobile: ' + session['mobile'] + '\n'
+  roommsg += '* Duty mail: ' + session['email']
+  wEvent('dutyAlert','roommsg',room['id'] + str(roommsg))
 
   # Duty room membership
   try:
     membership = post_roommembership(session['accesstoken'],room['id'],session['email'],'true')
-    wEvent('dutyAlert','room',str("Duty room membership (name:"+roomname+", member:"+session['email']+")"))
+    wEvent('dutyAlert','membership',str(room['id'] + " Duty room membership" + room['id']))
   except Exception as e:
     status = 'KO'
-    wEvent('dutyAlert','room',str("Issue during room membership (email:"+session['email']+")"))
+    wEvent('dutyAlert','membership',str(room['id'] + " Issue during room membership"))
 
   # Duty room message post
   try:
     msg = post_message(session['accesstoken'],room['id'],roommsg)
-    wEvent('dutyAlert','message',str("Duty room message post (name:"+roomname+", msg:"+roommsg+")"))
+    wEvent('dutyAlert','message',str(room['id'] + " Duty room message post"))
   except Exception as e:
     status = 'KO'
-    wEvent('dutyAlert','room',str("Issue during post message (name:"+roomname+")"))
+    wEvent('dutyAlert','message',str(room['id'] + " Issue during post message"))
 
   # Duty sms processing
   try:
-    sms(session['mobile'],str('DUTY ALERT: thanks to join Spark to consult alert.\nSpace name:'+roomname+',Space id:'+room['id']))
-    wEvent('dutyAlert','sms',str("Duty sms processing (name:"+roomname+", room id:"+room['id']+", mobile:"+session['mobile']+")"))
+    sms(session['mobile'],roommsg)
+    wEvent('dutyAlert','sms',str(room['id'] + " Duty sms processing"))
   except Exception as e:
-    wEvent('dutyAlert','sms',str("Issue during sms processing (name:"+roomname+")"))
+    wEvent('dutyAlert','sms',str(room['id'] + " Issue during sms processing"))
 
   # Duty call processing
   try:
-    call(session['mobile'],'http://hosting.tropo.com/48562/www/audio/7gramrocks.mp3')
-    wEvent('dutyAlert','call',str("Duty call processing OK (name:"+roomname+", room id:"+room['id']+", mobile:"+session['mobile']+")"))
+    call(session['mobile'],'http://www.tropo.com/docs/troporocks.mp3')
+    wEvent('dutyAlert','call',str(room['id'] + " Duty call processing"))
   except Exception as e:
-    wEvent('dutyAlert','call',str("Issue during call processing (name:"+roomname+")"))
+    wEvent('dutyAlert','call',str(room['id'] + " Issue during call processing"))
 
   # End of Duty Alert auto treatment
-  wEvent('dutyAlert','app',str("Duty Alert created, status: "+status+" (room name:"+roomname+", room id:"+room['id']+", mobile:"+session['mobile']+")"))
+  wEvent('dutyAlert','END',str(room['id'] + " Duty Alert created, status: " + status))
   return str("Duty call alert done, status "+status)
 

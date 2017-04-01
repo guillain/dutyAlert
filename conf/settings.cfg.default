@@ -7,6 +7,8 @@
 # app def
 APP_URL = ''
 APP_MAIL=''
+APP_SPACE_NAME='Duty Alert Space'
+APP_SPACE_MSG='New duty alert psace'
 
 # MySQL conf
 MYSQL_USER='root'
