@@ -72,7 +72,7 @@ vi run (adapt at least the path)
 
 2/ For the prod, pm2 is used (install also this dependency)
 ```bash
-./app [start|stop|restart|staus]
+./run [start|stop|restart|staus]
 ```
 
 ### Test

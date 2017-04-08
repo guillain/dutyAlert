@@ -6,7 +6,7 @@
 # Copyright 2017 GPL - Guillain
 
 HOST=0.0.0.0
-PORT=8081
+PORT=8082
 
 export ROOT_DIR='/var/www/dutyAlert'
 export CONF_DIR="${ROOT_DIR}/conf"
