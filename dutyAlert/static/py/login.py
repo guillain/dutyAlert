@@ -25,12 +25,9 @@ def userlogin(login,password):
         sql += "  (SELECT ids.id FROM ids, mapping WHERE ids.sid = mapping.teamid AND ids.type = 'teamid' AND u.uid = mapping.uid) "
         sql += "FROM users u, mapping m "
         sql += "WHERE u.login = '" + login + "' AND pw_hash=PASSWORD('" + password + "') AND u.uid = m.uid"
-        print sql
         data = exeReq(sql)
-        print data
     except Exception as e:
         logger('login','DB connection/login request error!')
-        print e
         return 'ko'
 
     if data is None:

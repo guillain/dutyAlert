@@ -29,29 +29,24 @@ api.config.from_envvar('FLASK_SETTING')
 
 
 # Duty Alert mgt --------------------------------------------------------------------------
-@dutyAlert_api.route('/dutyAlert', methods=['POST'])
 def dutyAlert():
   wEvent('dutyAlert','START',str('Start Alert duty process'))
   roomname = api.config['APP_SPACE_NAME']
   status = 'OK'
 
-  # Create Spark room instead if:
-  #  > DUTY ALERT ROOM ID is recorded in the user profil
+  # Create Spark room instead if DUTY ALERT ROOM ID is recorded in the user profil
   if session['roomid']:
     # Get Duty room
     try:
       room = get_room(session['accesstoken'],session['roomid'])
-      print str(room)
       wEvent('dutyAlert','getroom',str(session['roomid'] + " Duty room getting"))
     except Exception as e:
       wEvent('dutyAlert','getroom',str(session['roomid'] + " Issue during room getting"))
       return 'KO'
-    room['id'] = session['roomid']
   else:
     # Duty room creation
     try:
       room = post_room(session['accesstoken'],roomname)
-      print room
       wEvent('dutyAlert','setroom',str(room['id'] + " Duty room creation"))
     except Exception as e:
       wEvent('dutyAlert','setroom',str("Issue during room creation (name:"+roomname+")"))
@@ -69,8 +64,7 @@ def dutyAlert():
   roommsg += '* Duty mail: ' + session['email']
   wEvent('dutyAlert','roommsg',room['id'] + ' ' + str(roommsg))
 
-  # Add user room membership instead
-  #   > DUTY TEAM ID is recorded in the user profil
+  # Add user room membership instead if DUTY TEAM ID is recorded in the user profil
   if session['teamid']:
     # Add team in the duty room
     try:
@@ -99,14 +93,14 @@ def dutyAlert():
 
   # Duty sms processing
   try:
-    #sms(session['mobile'],roommsg)
+    sms(session['mobile'],roommsg)
     wEvent('dutyAlert','sms',str(room['id'] + " Duty sms processing"))
   except Exception as e:
     wEvent('dutyAlert','sms',str(room['id'] + " Issue during sms processing"))
 
   # Duty call processing
   try:
-    #call(session['mobile'],'http://www.tropo.com/docs/troporocks.mp3')
+    call(session['mobile'],'http://www.tropo.com/docs/troporocks.mp3')
     wEvent('dutyAlert','call',str(room['id'] + " Duty call processing"))
   except Exception as e:
     wEvent('dutyAlert','call',str(room['id'] + " Issue during call processing"))
@@ -114,7 +108,6 @@ def dutyAlert():
   # Duty send email
   try:
     resMail = sendMail(api.config['APP_MAIL_HOST'],api.config['APP_MAIL'],session['email'],roommsg)
-    #print str(resMail)
     wEvent('dutyAlert','email',str(room['id'] + " Duty email processing"))
   except Exception as e:
     wEvent('dutyAlert','email',str(room['id'] + " Issue during email processing"))

@@ -7,4 +7,7 @@ But you can also get only the python with another web server, container...
 * * Flask
 * * MySQLdb
 * * twilio
-
+* * multiprocessing
+* * re, os
+* * request, render_template, redirect
+* * url_for, jsonify, flash, session

@@ -15,6 +15,7 @@ APP_SPACE_MSG='New duty alert psace'
 MAIL_HOST = 'pop.gmail.com'
 MAIL_USER = 'dutyAlertApp'
 MAIL_PASS = 'C&1CptDutyAlert!'
+MAIL_POOL_FREQ = '60'
 
 # MySQL conf
 MYSQL_USER='root'
