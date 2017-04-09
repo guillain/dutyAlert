@@ -35,6 +35,9 @@ The alert is provided on:
 ## Without mail server
 Thanks to use the version 1.0.x
 
+## The database explanation
+[Following file: doc/database.md](doc/database.md)
+
 ## The improvement ideas
 [Following file: doc/todo.md](doc/todo.md)
 

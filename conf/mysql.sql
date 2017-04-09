@@ -32,7 +32,7 @@ create table groups (
 drop table if exists ids;
 create table ids (
   sid integer primary key auto_increment,
-  id varchar(32) not null,
+  id varchar(92) not null,
   type varchar(32) not null,
   description text not null,
   creationdate date,
@@ -44,10 +44,10 @@ create table mapping (
   mid integer primary key auto_increment,
   uid integer,
   gid integer,
-  roomid text,
-  teamid text,
-  peopleid text,
-  msgid text,
+  roomid integer,
+  teamid integer,
+  peopleid integer,
+  msgid integer,
   admin boolean,
   moder boolean,
   level integer
@@ -56,14 +56,13 @@ create table mapping (
 --
 -- Table structure for table `events`
 --
-DROP TABLE IF EXISTS `events`;
-CREATE TABLE `events` (
-  `eid` int(11) NOT NULL AUTO_INCREMENT,
-  `module` varchar(32) NOT NULL,
-  `user` varchar(32) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `msg` text NOT NULL,
-  `status` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`eid`)
+DROP TABLE IF EXISTS events;
+CREATE TABLE events (
+  eid integer primary key auto_increment,
+  module varchar(32) NOT NULL,
+  user varchar(32) NOT NULL,
+  timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  msg text NOT NULL,
+  status varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

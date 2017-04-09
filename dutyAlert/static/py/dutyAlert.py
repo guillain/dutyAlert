@@ -14,7 +14,7 @@ from flask import url_for, jsonify, session
 from tools import logger, exeReq, wEvent
 
 import re, os, sys, urllib, base64
-from pyCiscoSpark import post_room, post_message, post_roommembership
+from pyCiscoSpark import get_room, post_room, post_message, post_roommembership
 from myTwilio import sms, call
 from tools import logger, exeReq, wEvent
 from mail import sendMail, popSrvMail
