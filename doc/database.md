@@ -24,10 +24,9 @@ One another table make the mapping between each object and it's the _mapping_ ta
   moder boolean,
   level integer
 ```
-This allow to have multi mapping for:
-* user to group, room, team, people, msd
-* with different level access
-i.e. in the need of one Service Desk team manage many customer/services with different sources and duty access.
+This allow to have mapping for 
+* user to group, room, team, people, msg with different level access
+But becareeful, only one user can be registered and have one single netry for teamid and roomid.
 
 ## Databse structure
 The database structure is define as bellow and following the table's structure:

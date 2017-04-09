@@ -20,12 +20,17 @@ def userlogin(login,password):
         return 'ko'
 
     try:
-        sql  = "SELECT u.email, u.landline, u.mobile, u.accesstoken, m.roomid, m.teamid "
+        sql  = "SELECT u.email, u.landline, u.mobile, u.accesstoken,"
+        sql += "  (SELECT ids.id FROM ids, mapping WHERE ids.sid = mapping.roomid AND ids.type = 'roomid' AND u.uid = mapping.uid), "
+        sql += "  (SELECT ids.id FROM ids, mapping WHERE ids.sid = mapping.teamid AND ids.type = 'teamid' AND u.uid = mapping.uid) "
         sql += "FROM users u, mapping m "
-        sql += "WHERE u.login = '" + login + "' AND pw_hash=PASSWORD('" + password + "') AND u.uid = m.uid "
+        sql += "WHERE u.login = '" + login + "' AND pw_hash=PASSWORD('" + password + "') AND u.uid = m.uid"
+        print sql
         data = exeReq(sql)
+        print data
     except Exception as e:
-        logger('login','DB connection/request error!')
+        logger('login','DB connection/login request error!')
+        print e
         return 'ko'
 
     if data is None:

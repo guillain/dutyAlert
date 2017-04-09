@@ -41,11 +41,12 @@ def dutyAlert():
     # Get Duty room
     try:
       room = get_room(session['accesstoken'],session['roomid'])
-      wEvent('dutyAlert','getroom',str(room['id'] + " Duty room getting"))
+      print str(room)
+      wEvent('dutyAlert','getroom',str(session['roomid'] + " Duty room getting"))
     except Exception as e:
-      wEvent('dutyAlert','getroom',session['roomid'] + str(" Issue during room getting"))
+      wEvent('dutyAlert','getroom',str(session['roomid'] + " Issue during room getting"))
       return 'KO'
-
+    room['id'] = session['roomid']
   else:
     # Duty room creation
     try:
