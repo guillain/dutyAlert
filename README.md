@@ -2,103 +2,54 @@
 * Cisco Spark
 * Twilio
 ...to raise alert and wake the duty guy
+...but more than that...
 
 ## What is it?
-It's a form form with local authentication who:
-* store in session the profil coming from the local
-* create a Cisco Spark room
-* associate its member to the Cisco Spark room
-* post the alert message in the Cisco Spark room
-* send SMS via Twilio
-* perform a call via Twilio
-All of that with Event manage
+It's a system to raise alert coming from:
+* Web event
+* * for that web form is provided for the demo
+* Mail
+* * for that mailbox is polling (option cab be add to filter subject for the moment new emails are catched)
+* * imap and pop features are provided
+
+It will inform:
+* In the Cisco Spark room:
+* * Only the duty guy and admin if no team id recorded in the user profil
+* * the team and associated member if team id is provided in the session
+* On phone:
+* * sms and call for the duty guy only
+* By mail:
+* * to send back report to original montiroign system
+
+The alert is provided on:
+* Cisco Spark room
+* * if roomid is provided in the user profil, the room is updated with the new alert message + details
+* * if not, new room is created and alert message + details are posted into
+* * (these two behaviors are more oriented to have the capability to follow one specific room vs. create new room than allow one specific room each time and record the first room id done during the creation for permananet record (but this can be add in update sql request of course))
+* SMS
+* * The same message as posted in the Cisco Spark room to provide info on the mobile
+* Call
+* * To wake up the guy
+* * The idea is to be sure that the guy is ready
+
+## Without mail server
+Thanks to use the version 1.0.x
+
+## The improvement ideas
+[Following file: doc/todo.md](doc/todo.md)
 
 ## PreRequisites
-Configuration is provided for Apache and WSGI server.
-But you can also get only the python with another web server, container...
-* Apache2
-* MySQL
-* python (2.7)
-* * Flask
-* * MySQLdb
-* * twilio
+[Following file: doc/prerequisites.md](doc/prerequisites.md)
 
 ## Install
+[Following file: doc/install.md](doc/install.md)
 
-### Clone localy
-```bash
-git clone https://github.com/guillain/dutyAlert.git
-```
+## Troubleshooting
+[Following file: doc/troubleshooting.md](doc/troubleshooting.md)
 
-### Configure and set apache configuration
-* For unsecure http (80)
-```bash
-cp conf/dutyAlert_apache.conf.default conf/dutyAlert_apache.conf
-vi conf/dutyAlert_apache.conf (ServerName must be replaced)
-ln -s /var/www/dutyAlert/conf/dutyAlert_apache.conf /etc/apache2/conf-enabled/dutyAlert_apache.conf
-```
+## Report bug
+[Following file: issues](issues)
 
-* For secure http (443)
-```bash
-cp conf/dutyAlert_apache-secure.conf.default conf/dutyAlert_apache_secure.conf
-vi conf/dutyAlert_apache-secure.conf (ServerName must be replaced, certificate must be adapted)
-ln -s /var/www/dutyAlert/conf/dutyAlert_apache-secure.conf /etc/apache2/conf-enabled/dutyAlert_apache-secure.conf
-```
-
-### Configure the database
-```bash
-mysqladmin create dutyAlert -utoto -p
-mysql dutyAlert -utoto -p < conf/mysql.sql
-mysql dutyAlert -utoto -p < conf/mysql_data.sql (add users can be useful...)
-```
-
-### Configure the dutyAlert application
-Remember to have or create
-* [Cisco Spark](http://developper.ciscospark.com) client ID and secret
-* [Twilio](http://www.twilio.com) account SID and token
-```bash
-cp conf/settings.cfg.default conf/settings.cfg
-vi conf/settings.cfg
-```
-
-### Run the application
-Two configuration availables
-
-1/ For the dev, node is used
-```bash
-vi run (adapt at least the path)
-./run manual
-```
-
-2/ For the prod, pm2 is used (install also this dependency)
-```bash
-./run [start|stop|restart|staus]
-```
-
-### Test
-* Put your url in the web browser
-* Login with the user add in the conf/mysql_data.sql file
-* If Cisco Spark token not already in the db, follow the process to get it and click on the shortcut below the login
-* Click on the panel
-* It's done :)
-
-### Troubleshooting
-Start with the dev run mode and follow the traces in the screen.
-This should be the good point to start... As for all troubleshooting... logs first ;)
-If no specific issue appear you can follow the action plan hereafter.
-
-Token access = TA
-
-* No Spark space created: 
-* * Are you sure about your Cisco Spark TA?
-* * If you use this Cisco Spark TA with postman it works?
-* No SMS: Twilio
-* * As for Cisco Spark, check your Twilio TA
-* * Be sure that:
-* * * The phone number is authorized
-* * * The number can send SMS
-* No Call: Twilio
-* * Same as for SMS (instead the SMS feature of course)
 
 
 Have fun

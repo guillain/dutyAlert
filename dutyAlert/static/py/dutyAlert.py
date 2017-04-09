@@ -4,16 +4,20 @@
 # Date: 2017/01/18
 # Author: Guillain (guillain@gmail.com)
 # Copyright 2017 GPL - Guillain
+#
+# dutyAlert main script that manage the scenario.
+# For that features are picked up from
+# libraries and api.
 
 from flask import Flask, request, render_template, redirect
 from flask import url_for, jsonify, session
 from tools import logger, exeReq, wEvent
 
-import re, os, sys, urllib, base64, smtplib
-from email.mime.text import MIMEText
+import re, os, sys, urllib, base64
 from pyCiscoSpark import post_room, post_message, post_roommembership
 from myTwilio import sms, call
 from tools import logger, exeReq, wEvent
+from mail import sendMail, popSrvMail
 
 from flask import Blueprint
 dutyAlert_api = Blueprint('dutyAlert_api', __name__)
@@ -31,18 +35,30 @@ def dutyAlert():
   roomname = api.config['APP_SPACE_NAME']
   status = 'OK'
 
-  # Duty room creation
-  try:
-    room = post_room(session['accesstoken'],roomname)
-    wEvent('dutyAlert','room',str(room['id'] + " Duty room creation"))
-  except Exception as e:
-    wEvent('dutyAlert','room',str("Issue during room creation (name:"+roomname+")"))
-    return 'KO'
+  # Create Spark room instead if:
+  #  > DUTY ALERT ROOM ID is recorded in the user profil
+  if session['roomid']:
+    # Get Duty room
+    try:
+      room = get_room(session['accesstoken'],session['roomid'])
+      wEvent('dutyAlert','getroom',str(room['id'] + " Duty room getting"))
+    except Exception as e:
+      wEvent('dutyAlert','getroom',session['roomid'] + str(" Issue during room getting"))
+      return 'KO'
+
+  else:
+    # Duty room creation
+    try:
+      room = post_room(session['accesstoken'],roomname)
+      print room
+      wEvent('dutyAlert','setroom',str(room['id'] + " Duty room creation"))
+    except Exception as e:
+      wEvent('dutyAlert','setroom',str("Issue during room creation (name:"+roomname+")"))
+      return 'KO'
 
   # Prepare message
   roomlink = re.split('ciscospark://us/ROOM/', str(base64.b64decode(room['id'])))
-
-  roommsg = api.config['APP_SPACE_MSG']
+  roommsg  = api.config['APP_SPACE_MSG']
   roommsg += '* Space name: ' + roomname + '\n'
   roommsg += '* Space id: ' + room['id'] + '\n'
   roommsg += '* Space web url: ' + 'https://web.ciscospark.com/rooms/' + str(roomlink[1]) + '/chat' + '\n'
@@ -50,15 +66,27 @@ def dutyAlert():
   roommsg += '* Duty login: ' + session['login'] + '\n'
   roommsg += '* Duty mobile: ' + session['mobile'] + '\n'
   roommsg += '* Duty mail: ' + session['email']
-  wEvent('dutyAlert','roommsg',room['id'] + str(roommsg))
+  wEvent('dutyAlert','roommsg',room['id'] + ' ' + str(roommsg))
 
-  # Duty room membership
-  try:
-    membership = post_roommembership(session['accesstoken'],room['id'],session['email'],'true')
-    wEvent('dutyAlert','membership',str(room['id'] + " Duty room membership" + room['id']))
-  except Exception as e:
-    status = 'KO'
-    wEvent('dutyAlert','membership',str(room['id'] + " Issue during room membership"))
+  # Add user room membership instead
+  #   > DUTY TEAM ID is recorded in the user profil
+  if session['teamid']:
+    # Add team in the duty room
+    try:
+      membership = post_roommembership(session['accesstoken'],room['id'],session['teamid'],'true')
+      wEvent('dutyAlert','team membership',str(room['id'] + " Duty team room membership " + session['teamid']))
+    except Exception as e:
+      status = 'KO'
+      wEvent('dutyAlert','team membership',str(room['id'] + " Issue during team room membership " + session['teamid']))
+
+  else:
+    # Add user in the duty room
+    try:
+      membership = post_roommembership(session['accesstoken'],room['id'],session['email'],'true')
+      wEvent('dutyAlert','user membership',str(room['id'] + " Duty room membership " + session['email']))
+    except Exception as e:
+      status = 'KO'
+      wEvent('dutyAlert','user membership',str(room['id'] + " Issue during room membership " + session['email']))
 
   # Duty room message post
   try:
@@ -70,27 +98,22 @@ def dutyAlert():
 
   # Duty sms processing
   try:
-    sms(session['mobile'],roommsg)
+    #sms(session['mobile'],roommsg)
     wEvent('dutyAlert','sms',str(room['id'] + " Duty sms processing"))
   except Exception as e:
     wEvent('dutyAlert','sms',str(room['id'] + " Issue during sms processing"))
 
   # Duty call processing
   try:
-    call(session['mobile'],'http://www.tropo.com/docs/troporocks.mp3')
+    #call(session['mobile'],'http://www.tropo.com/docs/troporocks.mp3')
     wEvent('dutyAlert','call',str(room['id'] + " Duty call processing"))
   except Exception as e:
     wEvent('dutyAlert','call',str(room['id'] + " Issue during call processing"))
 
   # Duty send email
   try:
-    msg = MIMEText(roommsg)
-    msg['Subject'] = api.config['APP_SPACE_MSG']
-    msg['From'] = api.config['APP_MAIL']
-    msg['To'] = session['email']
-    s = smtplib.SMTP('localhost')
-    s.sendmail(api.config['APP_MAIL'], session['email'], msg.as_string())
-    s.quit()
+    resMail = sendMail(api.config['APP_MAIL_HOST'],api.config['APP_MAIL'],session['email'],roommsg)
+    #print str(resMail)
     wEvent('dutyAlert','email',str(room['id'] + " Duty email processing"))
   except Exception as e:
     wEvent('dutyAlert','email',str(room['id'] + " Issue during email processing"))

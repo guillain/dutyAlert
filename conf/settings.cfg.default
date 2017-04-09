@@ -7,8 +7,14 @@
 # app def
 APP_URL = ''
 APP_MAIL=''
+APP_MAIL_HOST = ''
 APP_SPACE_NAME='Duty Alert Space'
 APP_SPACE_MSG='New duty alert psace'
+
+# Mail server conf (mailbox to listen)
+MAIL_HOST = 'pop.gmail.com'
+MAIL_USER = 'dutyAlertApp'
+MAIL_PASS = 'C&1CptDutyAlert!'
 
 # MySQL conf
 MYSQL_USER='root'

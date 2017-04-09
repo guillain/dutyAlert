@@ -6,8 +6,8 @@
  @ Copyright 2017 GPL - Guillain
 */
 
-drop table if exists user;
-create table user (
+drop table if exists users;
+create table users (
   uid integer primary key auto_increment,
   login varchar(32) not null,
   email varchar(64) not null,
@@ -29,9 +29,19 @@ create table groups (
   UNIQUE KEY (name)
 );
 
+drop table if exists ids;
+create table ids (
+  sid integer primary key auto_increment,
+  id varchar(32) not null,
+  type varchar(32) not null,
+  description text not null,
+  creationdate date,
+  UNIQUE KEY (id)
+);
+
 drop table if exists mapping;
 create table mapping (
-  id integer primary key auto_increment,
+  mid integer primary key auto_increment,
   uid integer,
   gid integer,
   roomid text,

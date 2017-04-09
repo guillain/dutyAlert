@@ -6,6 +6,7 @@
 
 from flask import Flask, request, render_template, redirect
 from flask import url_for, jsonify, flash, session
+from static.py.login import userlogin
 from static.py.tools import logger, exeReq, wEvent
 import re, os
 
@@ -19,6 +20,13 @@ from static.py.dutyAlert import dutyAlert_api
 app.register_blueprint(dutyAlert_api)
 
 
+# MAIL mgt ----------------------------------------------------------------------------
+def mailSrv():
+  (subject,content) = popSrvMail(api.config['MAIL_HOST'],api.config['MAIL_USER'],api.config['MAIL_PASS'])
+  wEvent('dutyAlert','popSrvMail','Subject: ' + subject + ', content: ' + content)
+  return 'ok'
+
+
 # WEB mgt ----------------------------------------------------------------------------
 @app.route('/')
 def my_form():
@@ -28,40 +36,31 @@ def my_form():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
+    # Web POST login request
     if request.method == 'POST':
-        login = request.form['login']
-        password = request.form['password']
-        if not login or not password:
-            logger('login','Thanks to provide login and password')
-            return render_template('login.html')
-
-        try:
-            data = exeReq("SELECT email,landline,mobile,accesstoken FROM user WHERE login='"+login+"' AND pw_hash=PASSWORD('"+password+"')")
-        except Exception as e:
-            logger('login','DB connection/request error!')
-            return render_template('login.html')
-
-        if data is None:
-            logger('login','Wrong email or password!')
-            return render_template('login.html')
+        resUser = userlogin(request.form['login'],request.form['password'])
+        if   (resUser == 'ok'):
+            return render_template('dutyAlert.html')
+        elif (resUser == 'accesstoken'):
+            return render_template('sparkauth.html')
         else:
-            session['logged_in'] = True
-            session['login'] = login
-            session['email'] = data[0][0]
-            session['mobile'] = data[0][2]
-            session['accesstoken'] = ""
-            if data[0][3]: # if accesstoken set so finalize the login
-              session['accesstoken'] = "Bearer "+data[0][3]
-              logger('login','You were logged (login:'+login+',email:'+session['email']+').')
-              return render_template('dutyAlert.html')
-            else: # no accesstoken so Cisco registration request
-              logger('login','You were logged but without access token, redirect on AT request page ongoing (login:'+login+',email:'+session['email']+').')
-              return render_template('sparkauth.html')
+            return render_template('login.html')
+
+    # Spark auth back reply
     elif request.args.get("code"):
-      return render_template('sparkauth.html')
+        return render_template('sparkauth.html')
+
+    # Web GET login request
+    elif request.method == 'GET':
+        try:
+            if session['accesstoken']:
+                return render_template('dutyAlert.html')
+        except Exception as e:
+            return render_template('login.html')
+
+    # Error
     else:
-      return render_template('login.html', error=error)
+        return render_template('login.html')
 
 @app.route('/logout')
 def logout():
@@ -70,20 +69,17 @@ def logout():
   logger('logout','You were logged out')
   return render_template('login.html')
 
-# Auth --------------------------------------------------------------------------------
+# Spark auth --------------------------------------------------------------------------------
 @app.route('/sparkauth', methods=['GET', 'POST'])
 def sparkauth():
   if request.method == 'POST':
-    print 'sparkauth: dutyAlert.html'
     return render_template('dutyAlert.html')
   elif request.args.get("code"):
-    print 'sparkauth: sparkauth.html'
     return render_template('sparkauth.html')
   else:
-    print 'sparkauth: login.html'
     return render_template('login.html')
 
-# Access token ------------------------------------------------------------------------
+# Spark save Access token ------------------------------------------------------------------------
 @app.route('/saveAT', methods=['POST'])
 def saveAT():
     error = None
@@ -97,6 +93,7 @@ def saveAT():
     logger('saveAT','Your access token was recorded properly')
     return redirect(url_for('logout'))
 
+# Spark reset Access token ------------------------------------------------------------------------
 @app.route('/resetAT', methods=['POST'])
 def resetAT():
     error = None
