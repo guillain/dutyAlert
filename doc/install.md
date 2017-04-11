@@ -48,6 +48,7 @@ vi conf/settings.cfg
 ## Schedule the mail server pooling
 Add in your cron task the mail server pooling.
 For that you can use the shell script named 'run_mailSrv'
+Remember also to set the mail account in the __init__.py file (at this time it's like that...)
 
 ## Test
 * Put your url in the web browser
