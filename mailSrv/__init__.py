@@ -6,11 +6,11 @@
 
 from mail import popSrvMail
 
-MAILHOST = 'pop.gmail.com'
-MAILUSER = 'dutyAlertApp'
-MAILPASS = 'C&1CptDutyAlert!'
+MAIL_HOST = 'pop.gmail.com'
+MAIL_USER = 'dutyAlertApp'
+MAIL_PASS = 'C&1CptDutyAlert!'
 
-(subject,content) = popSrvMail(MAILHOST,MAILUSER,MAILPASS)
+(subject,content) = popSrvMail(MAIL_HOST,MAIL_USER,MAIL_PASS)
 # ToDo: send REST request to the web server
 print "subject: " + subject
 print "content: " + content
