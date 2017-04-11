@@ -6,7 +6,6 @@
 
 from flask import Flask, request, render_template, redirect
 from flask import url_for, jsonify, flash, session
-from multiprocessing import Pool
 from static.py.dutyAlert import dutyAlert
 from static.py.login import userlogin
 from static.py.tools import logger, exeReq, wEvent
@@ -20,15 +19,6 @@ app.config.from_envvar('FLASK_SETTING')
 # Import ServiceDeskBot features
 from static.py.dutyAlert import dutyAlert_api
 app.register_blueprint(dutyAlert_api)
-
-
-# MAIL mgt ----------------------------------------------------------------------------
-def mailSrv():
-  (subject,content) = popSrvMail(api.config['MAIL_HOST'],api.config['MAIL_USER'],api.config['MAIL_PASS'])
-  # ToDo: session setting
-  # resDutyAlert = dutyAlert() 
-  wEvent('dutyAlert','popSrvMail','Subject: ' + subject + ', content: ' + content)
-  return 'ok'
 
 
 # WEB mgt ----------------------------------------------------------------------------
@@ -118,9 +108,5 @@ def resetAT():
 # End of App --------------------------------------------------------------------------
 if __name__ == '__main__':
     sess.init_app(app)
-    app.debug = True
+    app.debug = app.config['DEBUG']
     app.run()
-
-    p = Pool(app.config['MAIL_POOL_FREQ'])
-    p.map(mailSrv)
-

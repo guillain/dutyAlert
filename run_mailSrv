@@ -1,0 +1,24 @@
+#!/bin/bash
+# Target: main script to run the mail server
+# Version: 0.1
+# Date: 2017/01/02
+# Author: Guillain (guillain@gmail.com)
+# Copyright 2017 GPL - Guillain
+
+HOST=0.0.0.0
+PORT=8092
+
+export ROOT_DIR='/var/www/dutyAlert'
+export APP_EXE="${ROOT_DIR}/mailSrv/__init__.py"
+export CONF_DIR="${ROOT_DIR}/conf"
+export LOG_DIR="${ROOT_DIR}/log"
+
+
+export FLASK_APP='mailSrv'
+export FLASK_DEBUG=1
+export FLASK_SETTING="${CONF_DIR}/settings.cfg"
+
+python "${APP_EXE}" 1> "${LOG_DIR}/mailSrv.log" 2> "${LOG_DIR}/mailSrv.err.log"
+
+
+exit 0

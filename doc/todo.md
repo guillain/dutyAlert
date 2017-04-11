@@ -1,5 +1,7 @@
 # The improvement ideas
-* Mail server multi-threading (imap & pop)
+* Mail server 
+* * REST req for the main app
+* * multi-threading (imap & pop)
 * TTS from Twilio to Duty Call
 * Be sure that the duty job is ongoing (room monitoring after to have raise the alert, phone validation (dtmf))
 * Escalation, two types:

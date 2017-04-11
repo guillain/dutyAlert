@@ -9,7 +9,7 @@ It's a system to raise alert coming from:
 * Web event
 * * for that web form is provided for the demo
 * Mail
-* * for that mailbox is pooling (option cab be add to filter subject for the moment new emails are catched)
+* * for that mailbox is pooling (option can be added to filter subject for the moment new emails are catched)
 * * imap and pop features are provided
 
 It will inform:

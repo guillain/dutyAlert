@@ -12,9 +12,10 @@ APP_SPACE_NAME='Duty Alert Space'
 APP_SPACE_MSG='New duty alert psace'
 
 # Mail server conf (mailbox to listen)
-MAIL_HOST = 'pop.gmail.com'
-MAIL_USER = 'dutyAlertApp'
-MAIL_PASS = 'C&1CptDutyAlert!'
+# NOT USED AT THIS TIME
+MAIL_HOST = ''
+MAIL_USER = ''
+MAIL_PASS = ''
 MAIL_POOL_FREQ = '60'
 
 # MySQL conf

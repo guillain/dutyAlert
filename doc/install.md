@@ -45,6 +45,10 @@ cp conf/settings.cfg.default conf/settings.cfg
 vi conf/settings.cfg
 ```
 
+## Schedule the mail server pooling
+Add in your cron task the mail server pooling.
+For that you can use the shell script named 'run_mailSrv'
+
 ## Test
 * Put your url in the web browser
 * Login with the user add in the conf/mysql_data.sql file
