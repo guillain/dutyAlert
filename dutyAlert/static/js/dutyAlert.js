@@ -2,7 +2,6 @@
  Target: Cisco Spark specific integration
  Version: 0.1
  Date: 2017/01/18
- Author: Guillain SANCHEZ
  Author: Guillain (guillain@gmail.com)
 ***/
 

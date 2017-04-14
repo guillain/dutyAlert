@@ -1,7 +1,6 @@
 # Target: Twilio specific integration
 # Version: 0.1
 # Date: 2017/01/15
-# Author: Guillain SANCHEZ
 # Author: Guillain (guillain@gmail.com)
 
 # Add mobile phone number to be checked

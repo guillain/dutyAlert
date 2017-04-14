@@ -9,6 +9,8 @@ git clone https://github.com/guillain/dutyAlert.git
 Default apache configuration are provided for http and https web access.
 This can work in parallel of manual execution for dev in parallel of prod (can be usefulll... ;).
 
+If you use one dedicated alias on your web server for this specific web app, follow the explanation below (virtual host creation with default config file).
+Else put the WSGI content of the default file in your virtual host definiton
 
 * For unsecure http (80)
 ```bash
