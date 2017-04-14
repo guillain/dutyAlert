@@ -5,6 +5,11 @@
 git clone https://github.com/guillain/dutyAlert.git
 ```
 
+### Install the Python requirements
+```bash
+pip install -r requirements.txt
+```
+
 ## Configure and set apache configuration
 Default apache configuration are provided for http and https web access.
 This can work in parallel of manual execution for dev in parallel of prod (can be usefulll... ;).

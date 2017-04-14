@@ -9,7 +9,7 @@
   $(function() {
     $('a#dutyAlertSub').bind('click', function() {
         $.ajax({
-            url: '/dutyAlert',
+            url: 'dutyAlert',
             data: $('form').serialize(),
             type: 'POST',
             success: function(data) {

@@ -93,14 +93,14 @@ def dutyAlert():
 
   # Duty sms processing
   try:
-    #sms(session['mobile'],roommsg)
+    sms(session['mobile'],roommsg)
     wEvent('dutyAlert','sms',str(room['id'] + " Duty sms processing"))
   except Exception as e:
     wEvent('dutyAlert','sms',str(room['id'] + " Issue during sms processing"))
 
   # Duty call processing
   try:
-    #call(session['mobile'],'http://www.tropo.com/docs/troporocks.mp3')
+    call(session['mobile'],'http://www.tropo.com/docs/troporocks.mp3')
     wEvent('dutyAlert','call',str(room['id'] + " Duty call processing"))
   except Exception as e:
     wEvent('dutyAlert','call',str(room['id'] + " Issue during call processing"))
