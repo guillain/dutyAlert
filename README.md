@@ -36,22 +36,22 @@ The alert is provided on:
 Thanks to use the version 1.0.x
 
 ## The database explanation
-[Following file: doc/database.md](doc/database.md)
+[doc/database.md](doc/database.md)
 
 ## The improvement ideas
-[Following file: doc/todo.md](doc/todo.md)
+[doc/todo.md](doc/todo.md)
 
 ## PreRequisites
-[Following file: doc/prerequisites.md](doc/prerequisites.md)
+[doc/prerequisites.md](doc/prerequisites.md)
 
 ## Install
-[Following file: doc/install.md](doc/install.md)
+[doc/install.md](doc/install.md)
 
 ## Troubleshooting
-[Following file: doc/troubleshooting.md](doc/troubleshooting.md)
+[doc/troubleshooting.md](doc/troubleshooting.md)
 
 ## Report bug
-[Following file: issues](issues)
+[issues](issues)
 
 
 
