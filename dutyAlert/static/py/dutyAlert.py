@@ -57,7 +57,8 @@ def dutyAlert():
   roommsg  = api.config['APP_SPACE_MSG']
   roommsg += '* Space name: ' + roomname + '\n'
   roommsg += '* Space id: ' + room['id'] + '\n'
-  roommsg += '* Space web url: ' + 'https://web.ciscospark.com/rooms/' + str(roomlink[1]) + '/chat' + '\n'
+  roommsg += '* Space web url: ' + 'https://web.ciscospark.com/#/rooms/' + str(roomlink[1]) + '\n'
+  roommsg += '* Space web url for login: ' + 'https://web.ciscospark.com/#/launch/rooms/' + str(roomlink[1]) '\n'
   roommsg += '* Space app url: ' + 'spark://rooms/' + str(roomlink[1]) +'\n'
   roommsg += '* Duty login: ' + session['login'] + '\n'
   roommsg += '* Duty mobile: ' + session['mobile'] + '\n'

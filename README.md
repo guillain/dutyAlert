@@ -32,6 +32,19 @@ The alert is provided on:
 * * To wake up the guy
 * * The idea is to be sure that the guy is ready
 
+## Scenario
+* Get Mail on mailbox (filter on subekct and/or content, not finalized)
+* Create/update Cisco Spark space
+* Send SMS to duty guy with formatted message
+* Call the duty with message to voice 
+* Send back email as report
+
+## Features
+* Web interface to manage users and group
+* Can create a new Cisco Spark space or used one associated to the user or team
+* Can associate user (group management included) or team
+* Escalation process is launched (add membership or team) of 'escalation' keywork is enter
+
 ## Without mail server
 Thanks to use the version 1.0.x
 
