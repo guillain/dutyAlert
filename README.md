@@ -38,6 +38,8 @@ The alert is provided on:
 * Send SMS to duty guy with formatted message
 * Call the duty with message to voice 
 * Send back email as report
+![](doc/workflow.png)
+![](doc/workflow_adv.png)
 
 ## Features
 * Web interface to manage users and group
